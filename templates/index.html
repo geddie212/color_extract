@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Colorizer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Splash&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="shortcut icon" href="static/img/brush.ico"/>
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+</head>
+<body>
+<video autoplay loop muted id="myVideo">
+    <source src="https://assets.codepen.io/3364143/7btrrd.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+<div class="container">
+    <div class="row justify-content-md-center">
+        <div class="col col-4">
+            <div class="row">
+                <div class="col">
+                    <h1>Colorizer</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col file-col">
+                    <form action="{{ url_for('upload_img') }}" method="POST" enctype="multipart/form-data">
+                        <label for="file-upload" class="custom-file-upload">
+                        </label>
+                        <input id="file-upload" type="file" name="file"/>
+                        <input type="submit"/>
+                    </form>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col col-info">
+                    <h2>Main Colors</h2>
+                    <p>With Hex code and percentage of whole image</p>
+                </div>
+            </div>
+            {% for color in palette %}
+            <div class="row">
+                <div class="col color" style="background-color: {{ color['color'] }};">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col hex-col">
+                    <label>Hex</label><br><label class="btn-label"> {{ color['color'] }}</label>
+                </div>
+                <div class="col hex-col">
+                    <label>% in Picture</label><br><label class="btn-label"> {{ color['color_pct'] }}%</label>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="col col-7">
+            <div class="row">
+            </div>
+            <div class="col col-info">
+                <p>File name:</p>
+                <h2>{{ file_name }}</h2>
+            </div>
+            {% if file_name %}
+            <div class="img-div"><img src="{{ file_location }}"></div>
+            {% else %}
+            <div class="img-div"><img src="static/img/no-image.png"></div>
+            {% endif %}
+            <div class="row">
+                <div class="col hex-col">
+                    <label>File size:</label><br><label class="btn-label"> {{ file_size }}Mb</label>
+                </div>
+                <div class="col hex-col">
+                    <label>Unique colors:</label><br><label class="btn-label"> {{ color_count }} Colors</label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+</html>
