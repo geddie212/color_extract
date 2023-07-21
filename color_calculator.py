@@ -1,11 +1,13 @@
+# This class/namespace does the calculation to get the top 10 most popular colors
+# Import statements
 import numpy as np
 from numpy import asarray
 from PIL import Image
 import pandas as pd
 
-
+# Color Calculator Class
 class ColorCalculator:
-
+    # Image file as input
     def __init__(self, image_file):
         self.image_file = image_file
         self.image = Image.open(self.image_file)
@@ -14,6 +16,7 @@ class ColorCalculator:
         self.length = self.data.shape[1]
         self.hex_df = []
 
+    # Uses numpy to calculate the frequency of each unique color
     def hex_converter(self):
         hex_colors = np.empty([self.height, self.length], dtype="U10")
         for row in range(self.height):
@@ -40,6 +43,7 @@ class ColorCalculator:
 
         return self.hex_df
 
+    # Returns list of the most frquent colors. The number of colors is the input
     def make_palette(self, color_qty):
         count = 0
         color_palette = []
@@ -55,6 +59,7 @@ class ColorCalculator:
                 break
 
         return color_palette
-
+        
+    # Returns the total number of unique colors
     def color_count(self):
         return len(self.hex_df)
