@@ -1,3 +1,4 @@
+# Scrap namespace for testing and playing
 import numpy as np
 from PIL import Image
 from numpy import asarray
